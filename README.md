@@ -8,7 +8,7 @@ https://drive.google.com/file/d/1_SfC-uzhlJZz1o0UuF7I6-JLbWJuFmK4/view?usp=shari
 # 1.Set up IntelliJ IDEA open the rentcar folder as a project and confige the Tomcat (prefer the 8.5.631)
 ![image](https://github.com/Rui-Liu-github/gwu_object_oriented_6234_group_4/assets/157539643/6b971b25-4bcd-45db-b974-2adee4c846ba)
 
-# 2. Download the local MySQL database then use Dbeaver(or other tools) to connect to MySQL to create and set up the database car_rent by the car_rent.sql
+# 2. Download the local MySQL database then use Dbeaver(or other tools) to connect MySQL to create and set up the database car_rent by the car_rent.sql
 ![image](https://github.com/Rui-Liu-github/gwu_object_oriented_6234_group_4/assets/157539643/c0cf8d80-aa0b-4c7b-b78b-b2585596e67f)
 
 # 3. Modify the db.properties file in the src/main/resources directory to change the username and the password to yours.
