@@ -1,6 +1,9 @@
 # gwu_object_oriented_6234
 This is the fourth group project of CSCI 6234 in spring 2024 cource.
 
+# Demo address
+https://drive.google.com/file/d/1_SfC-uzhlJZz1o0UuF7I6-JLbWJuFmK4/view?usp=sharing
+
 # Configuration
 # 1.Set up IntelliJ IDEA and confige the Tomcat (prefer the 8.5.631)
 ![image](https://github.com/Rui-Liu-github/gwu_object_oriented_6234_group_4/assets/157539643/6b971b25-4bcd-45db-b974-2adee4c846ba)
