@@ -5,7 +5,7 @@ This is the fourth group project of CSCI 6234 in spring 2024 cource.
 https://drive.google.com/file/d/1_SfC-uzhlJZz1o0UuF7I6-JLbWJuFmK4/view?usp=sharing
 
 # Configuration
-# 1.Set up IntelliJ IDEA and confige the Tomcat (prefer the 8.5.631)
+# 1.Set up IntelliJ IDEA open the rentcar folder as a project and confige the Tomcat (prefer the 8.5.631)
 ![image](https://github.com/Rui-Liu-github/gwu_object_oriented_6234_group_4/assets/157539643/6b971b25-4bcd-45db-b974-2adee4c846ba)
 
 # 2. Download the local MySQL database then use Dbeaver(or other tools) to connect to MySQL to create and set up the database car_rent by the car_rent.sql
