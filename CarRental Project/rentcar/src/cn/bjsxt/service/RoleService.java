@@ -7,11 +7,9 @@ import cn.bjsxt.pojo.Role;
 
 public interface RoleService {
 	/**
-	 * 根据角色name查询菜单列表
 	 * @param name
 	 * @return
 	 */
-
 
 	List<Role> findAllRole();
 

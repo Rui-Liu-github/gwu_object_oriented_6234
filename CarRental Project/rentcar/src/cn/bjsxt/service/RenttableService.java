@@ -9,7 +9,6 @@ import cn.bjsxt.pojo.User;
 public interface RenttableService {
 
 	/**
-	 * 查询所有出租单信息
 	 * 
 	 * @return
 	 */

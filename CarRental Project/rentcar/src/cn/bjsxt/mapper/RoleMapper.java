@@ -7,7 +7,6 @@ import cn.bjsxt.pojo.Role;
 
 public interface RoleMapper {
 	/**
-	 * 根据角色名查询菜单列表
 	 * @param name
 	 * @return
 	 */
@@ -17,7 +16,6 @@ public interface RoleMapper {
 	int deleteRole(int roleid);
 
 	int insertRoleByName(String rolename);
-
 
 	List<Role> findRoleLikeName(String name);
 

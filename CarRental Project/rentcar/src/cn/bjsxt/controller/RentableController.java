@@ -40,28 +40,28 @@ public class RentableController {
 	private UserService userService;
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@RequestMapping("updateRentTableHandler")
-	public String updateTableHandler(HttpServletRequest req) throws ParseException{
+	public String updateTableHandler(HttpServletRequest req) throws ParseException {
 		//
 		int rentId = Integer.parseInt(req.getParameter("rentid"));
-		String realEndTime  = req.getParameter("realEndTime");
+		String realEndTime = req.getParameter("realEndTime");
 		String beginTime = req.getParameter("beginTime");
 		String endTime = req.getParameter("endTime");
 		String userName = req.getParameter("username");
-		
+
 		//
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date ret = null;
 		Date bt = null;
 		Date et = null;
-		if( realEndTime!=null && realEndTime!="" ){
+		if (realEndTime != null && realEndTime != "") {
 			ret = new Date(sdf.parse(realEndTime).getTime());
 		}
-		if( beginTime!=null && beginTime!="" ){
+		if (beginTime != null && beginTime != "") {
 			bt = new Date(sdf.parse(beginTime).getTime());
 		}
-		if( endTime!=null && endTime!="" ){
+		if (endTime != null && endTime != "") {
 			et = new Date(sdf.parse(endTime).getTime());
 		}
 		RentTable rentTable = new RentTable();
@@ -71,20 +71,21 @@ public class RentableController {
 		rentTable.setEndTime(et);
 		rentTable.setUserName(userName);
 		int result = rentTableService.updateRentTable(rentTable);
-		if(result>0){
+		if (result > 0) {
 			return "success";
 		}
 		return "error";
 	}
-	
+
 	/**
-	 * 修改出租单预处理
+	 * Modify rental ticket pretreatment
+	 * 
 	 * @param req
 	 * @return
 	 */
 	@RequestMapping("preUpdateRentTable")
-	public String updateRentTable(HttpServletRequest req){
-		int rentId = Integer.parseInt( req.getParameter("rentid") );
+	public String updateRentTable(HttpServletRequest req) {
+		int rentId = Integer.parseInt(req.getParameter("rentid"));
 		RentTable table = rentTableService.findTableById(rentId);
 		Customer customer = customerService.findCustomerByIdentity(table.getCustIdentity());
 		Car car = carService.findCarByNumber(table.getCarNumber());
@@ -93,25 +94,26 @@ public class RentableController {
 		req.setAttribute("car", car);
 		return "updateRentTable";
 	}
-	
+
 	/**
-	 * 废弃出租单
+	 * Abandoned rental slip
+	 * 
 	 * @param req
 	 * @return
 	 */
 	@RequestMapping("dropRentTable")
 	@ResponseBody
-	public String dropRentTable(HttpServletRequest req){
+	public String dropRentTable(HttpServletRequest req) {
 		int rentTableId = Integer.parseInt(req.getParameter("rentTableId"));
-		int r1  = rentTableService.dropRentTable(rentTableId);
+		int r1 = rentTableService.dropRentTable(rentTableId);
 		RentTable rentTable = rentTableService.findTableById(rentTableId);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("carNumber", rentTable.getCarNumber());
 		map.put("flag", "0");
 		int r2 = carService.changeFlagByNumber(map);
-		if(r1>0 && r2>0){
+		if (r1 > 0 && r2 > 0) {
 			map.put("flag", "true");
-		}else{
+		} else {
 			map.put("flag", "false");
 		}
 		Gson gson = new Gson();
@@ -119,45 +121,48 @@ public class RentableController {
 		System.out.println(json);
 		return json;
 	}
-	
-	
+
 	/**
-	 * 处理生成出租单应付金额和预付金
+	 * Deal with the amount payable and prepayment of the rental form
+	 * 
 	 * @param req
 	 * @return
 	 * @throws ParseException
 	 */
 	@RequestMapping("addRentDataHandler")
 	@ResponseBody
-	public String addRentDataHandler(HttpServletRequest req) throws ParseException{
+	public String addRentDataHandler(HttpServletRequest req) throws ParseException {
 		String rentStartTime = req.getParameter("rentStartTime");
 		String rentEndTime = req.getParameter("rentEndTime");
 		String rentPrice = req.getParameter("rentPrice");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date t1 = sdf.parse(rentStartTime);
 		java.util.Date t2 = sdf.parse(rentEndTime);
-		int day = (int) ((t2.getTime() - t1.getTime()) / (24*60*60*1000));
-		double priceShouldPay = Double.parseDouble(rentPrice)*day;
-		double imprestNeed =Double.parseDouble(rentPrice)*11;
-		
-		Map<String,Double> map = new HashMap<String,Double>();
+		int day = (int) ((t2.getTime() - t1.getTime()) / (24 * 60 * 60 * 1000));
+		double priceShouldPay = Double.parseDouble(rentPrice) * day;
+		double imprestNeed = Double.parseDouble(rentPrice) * 11;
+
+		Map<String, Double> map = new HashMap<String, Double>();
 		map.put("priceShouldPay", priceShouldPay);
 		map.put("imprestNeed", imprestNeed);
-		Gson gson  = new Gson();
+		Gson gson = new Gson();
 		String json = gson.toJson(map);
 		System.out.println(json);
 		return json;
-		
-		/*List<Double> list = new ArrayList<Double>();
-		list.add(priceShouldPay);
-		list.add(imprestNeed);
-		Gson gson  = new Gson();
-		String json = gson.toJson(list);
-		return json;*/
+
+		/*
+		 * List<Double> list = new ArrayList<Double>();
+		 * list.add(priceShouldPay);
+		 * list.add(imprestNeed);
+		 * Gson gson = new Gson();
+		 * String json = gson.toJson(list);
+		 * return json;
+		 */
 	}
-	
+
 	/**
-	 * 增加出租单
+	 * Add rental list
+	 * 
 	 * @param rentTable
 	 * @return
 	 */
@@ -165,25 +170,26 @@ public class RentableController {
 	public String addRentTable(RentTable rentTable) {
 		rentTable.setRentFlag("1");
 		int r1 = rentTableService.addRentTable(rentTable);
-//		System.out.println(rentTable.getRentNo());
+		// System.out.println(rentTable.getRentNo());
 		System.out.println(rentTable.getRentFlag());
 		Map<String, String> map = new HashMap();
 		map.put("carNumber", rentTable.getCarNumber());
 		map.put("flag", "1");
 		int r2 = carService.changeFlagByNumber(map);
-		if(r1>0 && r2>0){
+		if (r1 > 0 && r2 > 0) {
 			return "success";
 		}
 		return "error";
 	}
-	
+
 	/**
-	 * 添加出租单前数据处理
+	 * Data processing before adding rental list
+	 * 
 	 * @param req
 	 * @return
 	 */
 	@RequestMapping("preAddRentTable")
-	public String preAddRentTable(HttpServletRequest req){
+	public String preAddRentTable(HttpServletRequest req) {
 
 		req.setAttribute("carid", req.getParameter("carid"));
 		req.setAttribute("carNumber", req.getParameter("carNumber"));
@@ -191,15 +197,16 @@ public class RentableController {
 		req.setAttribute("custId", req.getParameter("custId"));
 		req.setAttribute("rentPrice", req.getParameter("rentPrice"));
 		req.setAttribute("rentTableNo", new java.util.Date().getTime());
-		//req.setAttribute("rentTableNo", UUID.randomUUID().toString().replace("-", ""));
+		// req.setAttribute("rentTableNo", UUID.randomUUID().toString().replace("-",
+		// ""));
 		return "addRentCarTable";
 	}
-	
+
 	@RequestMapping("findRentTable")
-	public String findRentTable(){
+	public String findRentTable() {
 		return "findRentTable";
 	}
-	
+
 	/**
 	 *
 	 * @param req
@@ -209,27 +216,27 @@ public class RentableController {
 	@RequestMapping("findRentTableHandler")
 	public String findRentTable(HttpServletRequest req) throws ParseException {
 		//
-		String rentno = req.getParameter("rentNo")=="" ? null : req.getParameter("rentNo");
-		String realEndTime  = req.getParameter("realEndTime");
+		String rentno = req.getParameter("rentNo") == "" ? null : req.getParameter("rentNo");
+		String realEndTime = req.getParameter("realEndTime");
 		String beginTime = req.getParameter("beginTime");
 		String endTime = req.getParameter("endTime");
 		String rentFlag = req.getParameter("rentFlag");
-		String userName = req.getParameter("username")=="" ? null : req.getParameter("username");
-		String carNumber = req.getParameter("carNumber")=="" ? null : req.getParameter("carNumber");
-		String custIdentity = req.getParameter("custIdentity")=="" ? null :req.getParameter("custIdentity");
-		
+		String userName = req.getParameter("username") == "" ? null : req.getParameter("username");
+		String carNumber = req.getParameter("carNumber") == "" ? null : req.getParameter("carNumber");
+		String custIdentity = req.getParameter("custIdentity") == "" ? null : req.getParameter("custIdentity");
+
 		//
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date ret = null;
 		Date bt = null;
 		Date et = null;
-		if( realEndTime!=null && realEndTime!="" ){
+		if (realEndTime != null && realEndTime != "") {
 			ret = new Date(sdf.parse(realEndTime).getTime());
 		}
-		if( beginTime!=null && beginTime!="" ){
+		if (beginTime != null && beginTime != "") {
 			bt = new Date(sdf.parse(beginTime).getTime());
 		}
-		if( endTime!=null && endTime!="" ){
+		if (endTime != null && endTime != "") {
 			et = new Date(sdf.parse(endTime).getTime());
 		}
 		RentTable rentTable = new RentTable();
@@ -237,7 +244,7 @@ public class RentableController {
 		rentTable.setRealEndTime(ret);
 		rentTable.setBeginTime(bt);
 		rentTable.setEndTime(et);
-		if(!"-1".equals(rentFlag)){
+		if (!"-1".equals(rentFlag)) {
 			rentTable.setRentFlag(rentFlag);
 		}
 		rentTable.setUserName(userName);
@@ -246,33 +253,32 @@ public class RentableController {
 		System.out.println(rentTable);
 		List<RentTable> tables = rentTableService.findRenttables(rentTable);
 		System.out.println(tables);
-		if(tables.size()>0){
+		if (tables.size() > 0) {
 			req.setAttribute("tables", tables);
 			return "listRentTable";
 		}
 		return "nothing";
 	}
-	
+
 	@RequestMapping("findRentableByRentNo")
 	@ResponseBody
-	public String findCustByCard(HttpServletRequest req){
+	public String findCustByCard(HttpServletRequest req) {
 		String rentNo = req.getParameter("rentNo");
-		RentTable rentTable =  rentTableService.findRentableByRentNo(rentNo);
-		
+		RentTable rentTable = rentTableService.findRentableByRentNo(rentNo);
+
 		Map map = new HashMap();
-		if(rentTable!=null){
+		if (rentTable != null) {
 			map.put("rentNo", rentTable.getRentNo());
 			map.put("flag", "ok");
-			if(!"1".equals(rentTable.getRentFlag())){
+			if (!"1".equals(rentTable.getRentFlag())) {
 				map.put("flag", "err_no");
 			}
-		}else{
+		} else {
 			map.put("flag", "false");
 		}
 		Gson gson = new Gson();
 		String json = gson.toJson(map);
 		return json;
 	}
-	
 
 }

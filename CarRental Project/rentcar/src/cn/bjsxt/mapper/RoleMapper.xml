@@ -9,15 +9,12 @@
 	</select>
 
 	<select id="findAllRole" resultType="cn.bjsxt.pojo.Role">
-		<!-- select 项目:一定要跟实体类的属性字段一致. -->
 		select roleid,rolename from role ORDER BY roleid
 	</select>
 	<select id="findRoleLikeName" resultType="cn.bjsxt.pojo.Role">
-		<!-- select 项目:一定要跟实体类的属性字段一致. -->
 		select roleid,rolename from role where rolename LIKE #{0} ORDER BY roleid
 	</select>
 	<select id="findRoleByName" resultType="cn.bjsxt.pojo.Role">
-		<!-- select 项目:一定要跟实体类的属性字段一致. -->
 		select roleid,rolename from role where rolename=#{0}
 	</select>
 	<select id="findMenuById" resultType="cn.bjsxt.pojo.Menu">

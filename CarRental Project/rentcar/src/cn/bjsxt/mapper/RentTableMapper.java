@@ -9,7 +9,7 @@ import cn.bjsxt.pojo.User;
 public interface RentTableMapper {
 
 	/**
-	 * 查询方法
+	 * 
 	 * @param username
 	 * @param userpwd
 	 * @return

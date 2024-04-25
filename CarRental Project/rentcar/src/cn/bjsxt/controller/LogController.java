@@ -15,8 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 public class LogController {
 	@Autowired
 	LogtableService logtableService;
+
 	@RequestMapping("findLoginlog")
-	public String findLoginlog(User user,HttpServletRequest request) {
+	public String findLoginlog(User user, HttpServletRequest request) {
 		MyPageBean<Loginlog> mpb = new MyPageBean<Loginlog>();
 		String indexStr = request.getParameter("index");
 		String sizeStr = request.getParameter("size");
@@ -29,20 +30,20 @@ public class LogController {
 		String username = user.getUsername();
 		String name;
 		if (username == null) {
-			name="%%";
-		}else{
-			name = "%"+username+"%";
+			name = "%%";
+		} else {
+			name = "%" + username + "%";
 		}
-		// 通过用户ID取得菜单列表.
-		logtableService.findLoginlog(mpb,name);
-		// 通过request存储menus.
+		// Get the list of menus by user ID.
+		logtableService.findLoginlog(mpb, name);
+
 		request.setAttribute("mpb", mpb);
-		request.setAttribute("username",username);
+		request.setAttribute("username", username);
 		return "loginlog";
 	}
-	
+
 	@RequestMapping("findLogtable")
-	public String findLogtable(User user,HttpServletRequest request) {
+	public String findLogtable(User user, HttpServletRequest request) {
 		MyPageBean<Logtable> mpb = new MyPageBean<Logtable>();
 		String indexStr = request.getParameter("index");
 		String sizeStr = request.getParameter("size");
@@ -56,15 +57,14 @@ public class LogController {
 		String username = user.getUsername();
 		String name;
 		if (username == null) {
-			name="%%";
-		}else{
-			name = "%"+username+"%";
+			name = "%%";
+		} else {
+			name = "%" + username + "%";
 		}
-		// 通过用户ID取得菜单列表.
-		logtableService.findLogtable(mpb,name);
-		// 通过request存储menus.
+
+		logtableService.findLogtable(mpb, name);
 		request.setAttribute("mpb", mpb);
-		request.setAttribute("username",username);
+		request.setAttribute("username", username);
 		return "logtable";
 	}
 }

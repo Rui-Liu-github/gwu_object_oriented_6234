@@ -28,11 +28,9 @@
 		from renttable where rentid=#{0}
 	</select>
 
-	<!-- 废弃出租单 -->
 	<update id="changeRentFlag" parameterType="int">
 		update renttable set rentFlag="3" where rentid=#{0}
 	</update>
-	<!-- 结算出租单 -->
 	<update id="updateFlagById" >
 		update renttable set rentFlag="2",realendtime=#{1} where rentid=#{0}
 	</update>

@@ -16,6 +16,5 @@ public interface LogtableMapper {
 	int findLogtableTotalCount(String name);
 
 	List<Logtable> findLogtable(int startRow, int size, String name);
-	
 
 }

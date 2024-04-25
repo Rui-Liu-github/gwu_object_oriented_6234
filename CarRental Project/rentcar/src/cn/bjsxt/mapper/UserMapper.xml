@@ -16,7 +16,6 @@
 
 
 	<select id="login" resultType="cn.bjsxt.pojo.User">
-	<!-- select 项目:一定要跟实体类的属性字段一致.-->
 		select userId,username,userpwd,realname,identity,sex,address,phone,position from user
 		where username = #{0} and userpwd = #{1}
 	</select>

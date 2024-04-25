@@ -20,28 +20,28 @@ public class IndexController {
 
 	@RequestMapping("index")
 	public String index(User user, HttpServletRequest request) {
-		// 通过session中的用户去拿到user的id
+		// Get the user id from the user in the session
 		User u = (User) request.getSession().getAttribute("currentUser");
-//		System.out.println(u.getUserid());
-		// 通过用户ID取得菜单列表.
+		// System.out.println(u.getUserid());
+		// Get the list of menus by user ID.
 		List<Menu> menus = menuService.findMenuByUserId(u.getUserid());
-//		System.out.println(menus.size());
+		// System.out.println(menus.size());
 		int fixedSize = 21;
 		if (menus.size() > fixedSize) {
 			menus.subList(fixedSize, menus.size()).clear();
 		}
-//		System.out.println(menus.size());
+		// System.out.println(menus.size());
 
-		// 通过request存储menus.
+		// Store the menus via request.
 		request.setAttribute("menus", menus);
 		return "index";
 	}
-	
+
 	@RequestMapping("showMenu")
 	public String showMenu(HttpServletRequest request) {
-		// 通过用户ID取得菜单列表.
+		// Get the list of menus by user ID.
 		List<Menu> menus = menuService.showMenu();
-		// 通过request存储menus.
+		// Store the menus via request.
 		request.setAttribute("menus", menus);
 		return "addRole";
 	}

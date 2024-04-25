@@ -13,32 +13,28 @@
 		from car where number=#{0}
 	</select>
 
-	<!-- 将汽车修改成出租状态 -->
 	<update id="updateRentFlag" parameterType="int">
 		update car set isrenting='1' where carid=#{0}
 	</update>
-	<!-- 将汽车修改成未出租状态 -->
 	<update id="updateRentFlagByNo" >
 		update car set isrenting='0' where number=#{0}
 	</update>
 
-	<!-- 查找到所有的汽车 -->
 	<select id="findAllCars" resultType="cn.bjsxt.pojo.Car">
 		select carid, number, type, brand, color, price, rentprice, deposit, isrenting, img, description
 		from car
 	</select>
 	
-	<!-- 通过不同车型查找汽车 -->
 	<select id="findCarByType" resultType="cn.bjsxt.pojo.Car">
 		select carid, number, type, brand, color, price, rentprice, deposit, isrenting, img, description
 		from car where type=#{0}
 	</select>
-	<!-- 通过不同品牌查找汽车 -->
+
 	<select id="findCarByBrand" resultType="cn.bjsxt.pojo.Car">
 		select carid, number, type, brand, color, price, rentprice, deposit, isrenting, img, description
 		from car where brand=#{0}
 	</select>
-	<!-- 通过不同价格查找汽车 -->
+
 	<select id="findCarsByPrice" resultType="cn.bjsxt.pojo.Car">
 		select carid, number, type, brand, color, price, rentprice, deposit, isrenting, img, description
 		from car
@@ -52,11 +48,11 @@
 		</where>
 	</select>
 	
-	<!-- 查找所有汽车的车型，不重复 -->
+
 	<select id="selectCarsType" resultType="cn.bjsxt.pojo.Car">
 		select distinct(type) from car
 	</select>
-	<!-- 查找所有汽车的品牌，不重复 -->
+
 	<select id="selectCarsBrand" resultType="cn.bjsxt.pojo.Car">
 		select distinct(brand) from car
 	</select>

@@ -24,60 +24,59 @@ public class CustomerController {
 
 	@Autowired
 	CustomerService customerService;
-	
+
 	@RequestMapping("findCustByCard")
 	@ResponseBody
-	public String findCustByCard(HttpServletRequest req){
+	public String findCustByCard(HttpServletRequest req) {
 		String identity = req.getParameter("identity");
-		Customer cust =  customerService.findCustByCard(identity);
+		Customer cust = customerService.findCustByCard(identity);
 		Map map = new HashMap();
-		if(cust!=null){
+		if (cust != null) {
 			map.put("custid", cust.getCustId());
 			map.put("identity", cust.getIdentity());
 			map.put("flag", "ok");
-		}else{
+		} else {
 			map.put("flag", "false");
 		}
 		Gson gson = new Gson();
 		String json = gson.toJson(map);
 		return json;
 	}
-	
 
 	@RequestMapping("searchCust")
 	public String findCust() {
 		return "searchCust";
 	}
-	
+
 	@RequestMapping("addCust")
 	public String addCust() {
 		return "addCust";
 	}
-	
+
 	@RequestMapping("findAll")
 	@ResponseBody
 	public String findAll() {
-		// 从业务层拿到数据
+		// get data
 		List<Customer> list = customerService.findAll();
-		// 将数据转换成json
 		Gson gson = new Gson();
-		// 使用gson将集合转换成json串
+
+		// Use gson to convert the collection to a json string
 		String json = gson.toJson(list);
 		return json;
 	}
-	
+
 	@RequestMapping("findCusts")
 	@ResponseBody
 	public String findCusts(HttpServletRequest req) {
-		
+
 		String name = req.getParameter("name");
 		String identity = req.getParameter("identity");
-		
-		// 从业务层拿到数据
-		List<Customer> list = customerService.findCusts(name,identity);
-		// 将数据转换成json
+
+		// Get the data from the business layer
+		List<Customer> list = customerService.findCusts(name, identity);
 		Gson gson = new Gson();
-		// 使用gson将集合转换成json串
+
+		// Use gson to convert the collection to a json string
 		String json = gson.toJson(list);
 		return json;
 	}
@@ -92,9 +91,8 @@ public class CustomerController {
 		} else {
 			return "!!FAIL!!";
 		}
-		
-	}
 
+	}
 
 	@RequestMapping("updateCustomer")
 	public String updateCustomer(Customer customer, HttpServletRequest request) {
@@ -109,7 +107,7 @@ public class CustomerController {
 		String phone = request.getParameter("phone");
 		String career = request.getParameter("career");
 		String address = request.getParameter("address");
-		customer = new Customer(custId, name, pwd,sex, identity, phone, career,address);
+		customer = new Customer(custId, name, pwd, sex, identity, phone, career, address);
 
 		if (customerService.updateCustomer(customer) > 0) {
 
@@ -118,11 +116,11 @@ public class CustomerController {
 			return "error";
 		}
 	}
-	
+
 	@RequestMapping("deleteCustomer")
 	public String deleteCustomer(int custId, HttpServletRequest request) {
-		
-		System.out.println("删除客户操作："+(customerService.deleteCustomer(custId) > 0));
+
+		System.out.println("Delete a customer action：" + (customerService.deleteCustomer(custId) > 0));
 		if (customerService.deleteCustomer(custId) > 0) {
 			return "ok";
 		} else {

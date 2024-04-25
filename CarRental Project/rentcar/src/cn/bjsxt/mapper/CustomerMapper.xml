@@ -15,7 +15,6 @@
 		customer order by custid
 	</select>
 	
-	<!-- 通过身份证精确查询客户 -->
 	<select id="findCustByCard" resultType="cn.bjsxt.pojo.Customer">
 		select custid,identity from customer where identity=#{0}
 	</select>

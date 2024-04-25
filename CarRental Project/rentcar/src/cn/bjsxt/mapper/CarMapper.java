@@ -31,7 +31,7 @@ public interface CarMapper {
 	public List<Car> findAllCars();
 
 	public int updateRentFlag(int i);
-	
+
 	public int updateRentFlagByNo(String number);
 
 	public Car findCarByNumber(String carNumber);
