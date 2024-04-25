@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CodeController {
 
 	/**
-	 * 生成验证码
 	 * 
 	 * @param req
 	 * @param resp
@@ -70,7 +69,8 @@ public class CodeController {
 			gd.drawLine(x, y, x + xl, y + yl);
 		}
 
-		// randomCode用于保存随机产生的验证码，以便用户登录后进行验证。
+		// randomCode is used to store randomly generated CAPTchas for verification
+		// after the user is logged in.
 		StringBuffer randomCode = new StringBuffer();
 		int red = 0, green = 0, blue = 0;
 
